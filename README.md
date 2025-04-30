@@ -190,18 +190,13 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - **Byte Pair Encoding (BPE)**: متداول‌ترین روش. ابتدا پرتکرارترین جفت‌های کاراکتری را پیدا می‌کند و به صورت تکراری آن‌ها را ادغام می‌کند.
   
-  
   **مثال:**  
   کلمه‌ی `unhappiness` ممکن است ابتدا به صورت `u n h a p p i n e s s` شکسته شود، سپس با توجه به فراوانی، به صورت `un`, `hap`, `piness` تبدیل شود.
-  
-  
 
 - **WordPiece**: توسط گوگل برای BERT توسعه داده شد. مشابه BPE است اما با معیار احتمال حداکثر ،‌ بهترین تقسیم‌بندی را انتخاب می‌کند.
   
   **مثال:**  
   برای کلمه‌ی نا آشنای `playingfully` ممکن است خروجی توکن‌ها `playing`, `##ful`, `##ly` باشد که `##` نشان‌دهنده ادامه کلمه است.
-
-
 
 - **Unigram Language Model**: توسط SentencePiece استفاده می‌شود. تمام توکن‌های ممکن را در نظر می‌گیرد و بهترین ترکیب را انتخاب می‌کند.
   
@@ -212,15 +207,10 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
   
   **مثال:**  
   عبارت `I ❤️ GPT-4!` ممکن است به صورت توکن‌های `I`, `❤️`, `GPT`, `-`, `4`, `!` شکسته شود، برخلاف BPE که شاید `GPT-4` را به چند تکه بشکند.
-  
-  
-  
 
 ### ۸.۳. مسائل فرهنگی و زبانی در توکن‌سازی
 
 توکن‌سازهای عمومی اغلب برای زبان انگلیسی بهینه‌سازی شده‌اند. این موضوع برای زبان‌هایی مانند فارسی، عربی، اردو یا ترکی که ساختار صرفی پیچیده و الفبای متفاوت دارند، مشکل‌ساز می‌شود. مثلاً عبارت «می‌نویسم» ممکن است به چند توکن جدا تبدیل شود که یادگیری معنای آن را سخت‌تر می‌کند.
-
-
 
 ###### **مثال: «می‌نویسم»**
 
@@ -231,7 +221,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 - «نویس» → ریشه‌ی فعل
 
 - «م» → شناسه‌ی اول شخص مفرد
-  
 
 ###### **حالت‌های ممکن در توکن‌سازی (بسته به نوع tokenizer):**
 
@@ -251,8 +240,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 - ضمیر را از دست بدهد (اگر «م» حذف شود)
 
 - یا ریشه فعل را گم کند (اگر «نویس» اشتباه شکسته شود)
-
-
 
 ### ۸.۴. نگاشت توکن‌ها به شناسه (ID Mapping)
 
@@ -274,8 +261,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - **Layer Normalization و Residual Connections**: برای پایدارسازی آموزش
 
-
-
 فرض کنید مدل ما جمله‌ ی زیر رو پردازش کنه:
 
 `امروز هوا خیلی خوبه.`
@@ -283,8 +268,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 هدف مدل اینه که بفهمه معنای جمله چیه و مثلاً پیش‌بینی کنه که توکن بعدی چیه یا جواب سوالی بده.
 
 بیایم ببینیم چه اتفاقی می‌افته:
-
-
 
 ###### مرحله ۱: **Embedding Layer**
 
@@ -299,15 +282,11 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 - سپس هر عدد به یک بردار واقعی (مثلاً با 768 بعد) تبدیل می‌شه.  
   این بردارها قابل یادگیری هستن و می‌تونن نماینده معنای توکن باشن.
 
-
-
 ###### مرحله ۲: **اضافه‌کردن Positional Encoding**
 
 - چون ترنسفورمر ترتیب توکن‌ها رو نمی‌فهمه، به هر بردار، اطلاعاتی درباره موقعیت اون توکن هم اضافه می‌شه. مثلاً توکن اول، دوم، ... ششم.
 
 - نتیجه: بردارهایی که هم معنا و هم جایگاه رو در خودشون دارن.
-
-
 
 ###### مرحله ۳: **Multi-Head Self-Attention**
 
@@ -323,8 +302,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - در "multi-head"، این توجه در چند فضای معنایی مختلف انجام می‌شه (مثلاً یک head برای دستور زبان، یکی برای زمان، یکی برای جنسیت و ...)
 
-
-
 ###### مرحله ۴: **Feed Forward Network (FFN)**
 
 - برای هر توکن، یک شبکه‌ی کوچک دو لایه‌ای (MLP) داریم که بردارش رو به شکلی غیرخطی تغییر می‌ده.
@@ -333,19 +310,13 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - هدف: افزایش ظرفیت مدل برای درک الگوهای پیچیده.
 
-
-
 ###### مرحله ۵: **Residual Connection و Layer Normalization**
 
 - خروجی attention و FFN با ورودی قبلی جمع می‌شن (Residual)، بعد نرمال‌سازی می‌شن.
 
 - کمک می‌کنه که مدل در عمق بالا هم دچار ناپایداری نشه و گرادیان‌ها بهتر منتقل شن.
 
-
-
 ###### این کل بلاک (Attention + FFN + Normalization) معمولاً **n بار تکرار می‌شه** (مثلاً 12 یا 96 بار بسته به اندازه مدل).
-
-
 
 ###### در انتها:
 
@@ -359,8 +330,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 مورد استفاده قرار بگیرن.
 
-
-
 ###### مثال دقیق‌تر در عملکرد Attention:
 
 مثلاً مدل بفهمه که در جمله:
@@ -368,8 +337,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 > «امروز هوا خیلی خوبه.»
 
 توکن «خوبه» باید به «هوا» توجه کنه تا معنای جمله درست درک بشه. این «توجه» همون attention هست که مدل خودش یاد می‌گیره، بدون اینکه ما براش مشخص کنیم.
-
-
 
 ### ۹.۲. مدل‌های دیکودر-محور (Decoder-only)
 
@@ -401,13 +368,9 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - **شافل‌کردن**: برای جلوگیری از هم‌وابستگی موضوعی در مینی‌بچ‌ها
 
-
-
 فرض کنید جمله‌ی زیر یکی از ورودی‌های خام ماست:
 
 `"سلام!!!     چطوری؟ من ۳ بار ایمیلت رو فرستادم ولی جواب ندادی :("`
-
-
 
 ##### مراحل پیش‌پردازش، به ترتیب:
 
@@ -500,7 +463,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - **Distributed Training**: استفاده از چند GPU یا حتی چندین سرور برای آموزش موازی
 
- 
 آموزش LLM یعنی یاد دادن به مدل که:
 
 - **درک کنه** توی متن‌ها چه الگوهایی وجود داره
@@ -510,8 +472,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 مثل اینه که هزاران کتاب، مکالمه، پست وبلاگی و کد رو به مدل بدیم و بگیم:
 
 > «هر بار فقط یکی از کلمه‌ها رو حذف می‌کنیم، تو حدس بزن چی بوده!»
-
-
 
 ### ۱۲.۱. Loss Function – «معیار خطا»
 
@@ -528,8 +488,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 هدف آموزش: **کم کردن میانگین Loss روی تمام داده‌ها**
 
-
-
 ### ۱۲.۲. Optimization – «بهینه‌سازی وزن‌ها»
 
 حالا که فهمیدیم مدل چقدر اشتباه کرده (Loss)، باید کاری کنیم که دفعه بعد **اشتباه کمتری کنه.**
@@ -542,8 +500,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 مدل با این الگوریتم، **وزن‌ها (parameters)** رو قدم به قدم طوری تغییر می‌ده که Loss کمتر بشه.
 
-
-
 ### ۱۲.۳. Gradient Clipping – «مهار گرادیان»
 
 گاهی در مدل‌های بزرگ، هنگام backpropagation، مقدار گرادیان خیلی بزرگ می‌شه و باعث ناپایداری آموزش می‌شه (گرادیان منفجر می‌شه).
@@ -553,8 +509,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 > اگر گرادیان خیلی بزرگ شد، اونو قطع یا مقیاس می‌کنیم تا نترکونه!
 
 این کار جلوی نوسانات شدید مدل رو می‌گیره.
-
-
 
 ### ۱۲.۴. Mixed Precision Training – «استفاده هم‌زمان از عددهای ۱۶ و ۳۲ بیتی»
 
@@ -574,8 +528,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 در اغلب LLMهای جدید این تکنیک به‌شدت استفاده می‌شه.
 
-
-
 ### ۱۲.۵. Checkpointing – «ذخیره‌سازی مرحله‌ای مدل»
 
 آموزش LLMها ممکنه **هفته‌ها یا ماه‌ها** طول بکشه. اگه وسطش برق بره یا GPU خراب بشه؟
@@ -591,8 +543,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 - نیاز نیست از اول شروع کنیم
 
 همچنین برای **فاین‌تیونینگ بعدی** هم از همین چک‌پوینت‌ها استفاده می‌شه.
-
-
 
 ### ۱۲.۶. Distributed Training – «آموزش توزیع‌شده روی چند GPU یا سرور»
 
@@ -615,8 +565,6 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 
 - سرعت آموزش از چند هفته به چند روز می‌رسه
 
-
-
 ##### نتیجه نهایی
 
 آموزش LLM یعنی یک مسابقهٔ نفس‌گیر بین:
@@ -630,3 +578,721 @@ Transformer از دو بخش اصلی تشکیل شده است: Encoder و Decod
 اما با استفاده از بهینه‌سازی‌های هوشمند، تکنیک‌های پیشرفته مثل Mixed Precision، و توزیع بار روی هزاران GPU، آموزش این مدل‌ها ممکن شده.
 
 ---
+
+## ۱۳. تعریف دقیق مدل زبانی و هدف یادگیری آن
+
+مدل‌های زبانی (Language Models یا به اختصار LMها) نوعی شبکه عصبی هستند که هدف اصلی‌شان یادگیری توزیع احتمال دنباله‌ای از کلمات یا توکن‌هاست. به‌صورت ریاضی، هدف این مدل‌ها پیش‌بینی احتمال رخ‌داد یک توکن با توجه به توکن‌های قبلی است:
+
+P(wt​∣w1​,w2​,...,wt−1​)
+
+در این رابطه:
+
+- wt​ توکن فعلی است که باید پیش‌بینی شود.
+
+- w1​,...,wt−1​ توکن‌های قبلی هستند که به‌عنوان context استفاده می‌شوند.
+
+###### چرا این کار مهم است؟
+
+زیرا اگر مدلی بتواند توکن بعدی را به‌خوبی حدس بزند، می‌تواند:
+
+- متن تولید کند،
+
+- جمله را کامل کند،
+
+- پاسخ سؤال بدهد،
+
+- یا حتی کد بنویسد.
+
+مدل‌های زبانی به دو دسته اصلی تقسیم می‌شوند:
+
+- **Unidirectional Language Models** مثل GPT که فقط از سمت چپ به راست نگاه می‌کنند.
+
+- **Bidirectional Language Models** مثل BERT که متن را هم از چپ و هم از راست نگاه می‌کنند.
+
+در این پروژه، ما ابتدا روی نوع اول تمرکز می‌کنیم چون مناسب تولید متن (Text Generation) است.
+
+---
+
+## ۱۴. پیش‌پردازش داده‌ها و توکن‌سازی
+
+قبل از اینکه داده‌ای به مدل بدهیم، باید آن را به توکن‌هایی تبدیل کنیم که مدل بتواند آن‌ها را درک کند.
+
+#### ۱۴.۱. چرا توکن‌سازی مهم است؟
+
+چون مدل با کلمه یا حرف سروکار ندارد، بلکه با توکن‌هایی سروکار دارد که نمایشی عددی و یکنواخت دارند. به زبان ساده، هر ورودی باید به عدد (ID) تبدیل شود.
+
+#### ۱۴.۲. روش‌های مختلف توکن‌سازی
+
+1. **Word-level tokenization**  
+   مثال: `"I love AI"` ⟶ `["I", "love", "AI"]`  
+   مشکل: تعداد کلمات بسیار زیاد است (vocabulary size بالا)
+
+2. **Character-level tokenization**  
+   مثال: `"I love"` ⟶ `["I", " ", "l", "o", "v", "e"]`  
+   مشکل: دنباله‌ها بسیار بلند می‌شوند.
+
+3. **Subword-level tokenization (BPE یا SentencePiece)**  
+   مثال: `"unbelievable"` ⟶ `["un", "believ", "able"]`  
+   مزیت: هم ترکیبی است و هم کم‌واژه‌تر.
+
+ما در ادامه از روش **BPE** استفاده می‌کنیم که پایه‌ی بیشتر LLMهاست.
+
+---
+
+## ۱۵. ساخت دیتاست قابل آموزش (Dataset)
+
+اکنون باید داده‌هایی که در اختیار داریم را تبدیل به فرمتی کنیم که مدل بتواند آن را بخواند.
+
+#### ۱۵.۱. مراحل کلی:
+
+1. خواندن داده متنی (مثلاً فایل txt)
+
+2. تبدیل آن به لیستی از توکن‌ها
+
+3. تقسیم آن به دنباله‌های طول ثابت (مثلاً 128 توکن)
+
+4. تولید ورودی (X) و خروجی هدف (y) برای آموزش مدل
+
+مثال با یک جمله:
+
+- ورودی: `["من", "کتاب", "را", "می‌خوانم"]`
+
+- هدف: `["کتاب", "را", "می‌خوانم", "<EOS>"]`
+
+یعنی مدل باید یاد بگیرد با دیدن هر توکن، توکن بعدی را حدس بزند.
+
+فکر میکنم کم کم باید کد زدن رو شروع کنیم، پس :
+
+##### مرحله 1: نمونه فایل متنی
+
+فرض کنیم فایل `data.txt` شامل متن زیر است:
+
+`من برنامه‌نویسی را دوست دارم. مدل‌های زبانی بسیار جالب هستند.`
+
+
+
+##### مرحله 2: تعریف توکنایزر ساده
+
+برای شروع، یک توکنایزر ابتدایی کلمه‌محور می‌سازیم (در بخش ۱۴ توکنایزر پیچیده‌تر مثل BPE داریم):
+
+```python
+text = open("data.txt", encoding="utf-8").read()
+tokens = text.split()  # توکنایزر ساده مبتنی بر فاصله
+vocab = sorted(set(tokens))
+word2idx = {word: idx for idx, word in enumerate(vocab)}
+idx2word = {idx: word for word, idx in word2idx.items()}
+```
+
+مثلاً خروجی:
+
+```python
+tokens = ['من', 'برنامه‌نویسی', 'را', 'دوست', 'دارم.', 'مدل‌های', 'زبانی', 'بسیار', 'جالب', 'هستند.']
+word2idx = {'برنامه‌نویسی': 0, 'بسیار': 1, 'جالب': 2, 'دارم.': 3, 'دوست': 4, 'زبانی': 5, 'را': 6, 'من': 7, 'مدل‌های': 8, 'هستند.': 9}
+```
+
+##### مرحله 3: تبدیل کل متن به توکن‌های عددی
+
+```python
+token_ids = [word2idx[word] for word in tokens]
+# مثال خروجی: [7, 0, 6, 4, 3, 8, 5, 1, 2, 9]
+```
+
+##### مرحله 4: ایجاد جفت‌های ورودی/خروجی با sliding window
+
+فرض کنیم `block_size = 4` (یعنی 4 توکن به عنوان ورودی → پیش‌بینی توکن بعدی)
+
+```python
+block_size = 4
+X = []
+Y = []
+
+for i in range(len(token_ids) - block_size):
+    x = token_ids[i : i + block_size]
+    y = token_ids[i + block_size]
+    X.append(x)
+    Y.append(y)
+```
+
+خروجی:
+
+```python
+X = [
+    [7, 0, 6, 4],     # "من برنامه‌نویسی را دوست"
+    [0, 6, 4, 3],     # "برنامه‌نویسی را دوست دارم."
+    [6, 4, 3, 8],     # ...
+    [4, 3, 8, 5],
+    [3, 8, 5, 1],
+    [8, 5, 1, 2],
+]
+
+Y = [3, 8, 5, 1, 2, 9]
+```
+
+##### مرحله 5: تبدیل به Tensor
+
+```python
+import torch
+
+X_tensor = torch.tensor(X, dtype=torch.long)
+Y_tensor = torch.tensor(Y, dtype=torch.long)
+print(X_tensor.shape)  # torch.Size([6, 4])
+print(Y_tensor.shape)  # torch.Size([6])
+```
+
+##### مرحله 6: ساخت کلاس Dataset و DataLoader
+
+```python
+from torch.utils.data import Dataset, DataLoader
+
+class SimpleTextDataset(Dataset):
+    def __init__(self, X, Y):
+        self.X = X
+        self.Y = Y
+
+    def __len__(self):
+        return len(self.X)
+
+    def __getitem__(self, idx):
+        return self.X[idx], self.Y[idx]
+
+dataset = SimpleTextDataset(X_tensor, Y_tensor)
+loader = DataLoader(dataset, batch_size=2, shuffle=True)
+```
+
+##### مرحله 7: تست کردن دیتالودر
+
+```python
+for batch_x, batch_y in loader:
+    print("X:", batch_x)
+    print("Y:", batch_y)
+    break
+```
+
+##### نتیجه نهایی:
+
+الان یک دیتاست کامل آماده آموزش داریم که از متن ساده فارسی استخراج شده و به صورت batch آماده تغذیه به مدل زبانی ماست.
+
+---
+
+## ۱۶. ساخت مدل زبانی ساده با PyTorch
+
+ساخت یک مدل ساده اما کاربردی که ورودی‌اش دنباله‌ای از توکن‌هاست و خروجی‌اش پیش‌بینی توکن بعدی.
+
+
+
+##### معماری مدل پیشنهادی
+
+در این مرحله، ما یک معماری پایه برای مدل زبانی می‌سازیم:
+
+1. **Embedding Layer**: نگاشت هر توکن به یک بردار ویژگی
+
+2. **یک یا چند لایه ترنسفورمر (ساده‌شده)** یا **RNN** (فعلاً ساده)
+
+3. **Linear layer**: خروجی به اندازه واژگان برای پیش‌بینی توکن بعدی
+
+برای شروع از ساده‌ترین حالت استفاده می‌کنیم:
+
+
+
+##### نسخه ساده مدل با Embedding + Average + Linear
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class TinyLanguageModel(nn.Module):
+    def __init__(self, vocab_size, embed_dim):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.linear = nn.Linear(embed_dim, vocab_size)
+
+    def forward(self, x):
+        embeds = self.embedding(x)        # (batch, seq_len, embed_dim)
+        avg_embed = embeds.mean(dim=1)    # (batch, embed_dim)
+        logits = self.linear(avg_embed)   # (batch, vocab_size)
+        return logits
+```
+
+##### تست اولیه مدل
+
+```python
+vocab_size = len(word2idx)
+model = TinyLanguageModel(vocab_size, embed_dim=32)
+
+sample_x, sample_y = next(iter(loader))
+logits = model(sample_x)
+print("logits shape:", logits.shape)  # (batch_size, vocab_size)
+```
+
+##### مرحله آموزش
+
+```python
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+loss_fn = nn.CrossEntropyLoss()
+
+for epoch in range(100):
+    total_loss = 0
+    for batch_x, batch_y in loader:
+        logits = model(batch_x)
+        loss = loss_fn(logits, batch_y)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    
+    if epoch % 10 == 0:
+        print(f"Epoch {epoch} | Loss: {total_loss:.4f}")
+```
+
+##### تست مدل با پیش‌بینی توکن بعدی
+
+```python
+def predict_next_token(input_tokens):
+    input_ids = torch.tensor([[word2idx[t] for t in input_tokens]], dtype=torch.long)
+    logits = model(input_ids)
+    probs = F.softmax(logits, dim=-1)
+    next_token_id = torch.argmax(probs, dim=-1).item()
+    return idx2word[next_token_id]
+
+test_input = ['من', 'برنامه‌نویسی', 'را', 'دوست']
+print("Next word:", predict_next_token(test_input))
+```
+
+ما موفق شدیم یک مدل خیلی ساده اما کامل بسازیم که می‌تونه توکن بعدی یک دنباله را پیش‌بینی کنه.
+
+---
+
+## ۱۷. ساخت مدل زبانی ساده با معماری Transformer در PyTorch
+
+##### هدف این بخش:
+
+پیاده‌سازی یک مدل زبانی ساده ولی واقعی با استفاده از **Transformer Blocks** که ورودی آن دنباله‌ای از توکن‌هاست و خروجی‌اش احتمال توکن بعدی در هر موقعیت است.
+
+
+
+##### ساختار کلی مدل ما:
+
+```text
+Input (Token IDs)
+   ↓
+Embedding Layer + Positional Encoding
+   ↓
+N × Transformer Block (Self-Attention + FeedForward)
+   ↓
+Linear Layer → Vocab Size
+```
+
+##### مرحله ۱: کلاس کامل مدل Transformer
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import math
+
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, max_len=5000):
+        super().__init__()
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) * (-math.log(10000.0) / d_model))
+
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+
+        pe = pe.unsqueeze(0)  # (1, max_len, d_model)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        x = x + self.pe[:, :x.size(1)]
+        return x
+
+
+class TinyTransformerLM(nn.Module):
+    def __init__(self, vocab_size, d_model=64, nhead=4, num_layers=2):
+        super().__init__()
+        self.token_embed = nn.Embedding(vocab_size, d_model)
+        self.pos_encoder = PositionalEncoding(d_model)
+        
+        encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=nhead, dim_feedforward=128)
+        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+
+        self.linear_out = nn.Linear(d_model, vocab_size)
+
+    def forward(self, x):
+        # x shape: (batch, seq_len)
+        emb = self.token_embed(x)             # (batch, seq_len, d_model)
+        emb = self.pos_encoder(emb)           # (batch, seq_len, d_model)
+        emb = emb.permute(1, 0, 2)            # Transformer expects (seq_len, batch, d_model)
+
+        output = self.transformer(emb)        # (seq_len, batch, d_model)
+        output = output.permute(1, 0, 2)      # (batch, seq_len, d_model)
+
+        logits = self.linear_out(output)      # (batch, seq_len, vocab_size)
+        return logits
+```
+
+##### مرحله ۲: تست خروجی مدل
+
+```python
+model = TinyTransformerLM(vocab_size=len(word2idx), d_model=64)
+
+sample_x, _ = next(iter(loader))  # (batch, seq_len)
+logits = model(sample_x)          # (batch, seq_len, vocab_size)
+
+print("Logits shape:", logits.shape)
+```
+
+##### مرحله ۳: آموزش مدل (با cross-entropy در هر پوزیشن)
+
+```python
+def train_model(model, dataloader, epochs=20):
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
+    loss_fn = nn.CrossEntropyLoss()
+
+    for epoch in range(epochs):
+        total_loss = 0
+        for batch_x, batch_y in dataloader:
+            logits = model(batch_x)              # (batch, seq_len, vocab_size)
+            # فقط توکن آخر رو هدف قرار بدیم
+            final_logits = logits[:, -1, :]      # (batch, vocab_size)
+            loss = loss_fn(final_logits, batch_y)
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+        print(f"Epoch {epoch} | Loss: {total_loss:.4f}")
+```
+
+##### مرحله ۴: پیش‌بینی کلمه بعدی
+
+```python
+def predict_next_token(model, input_tokens, topk=5):
+    model.eval()
+    input_ids = torch.tensor([[word2idx[t] for t in input_tokens]], dtype=torch.long)
+    with torch.no_grad():
+        logits = model(input_ids)       # (1, seq_len, vocab_size)
+        last_logits = logits[:, -1, :]  # (1, vocab_size)
+        probs = F.softmax(last_logits, dim=-1)
+
+    topk_ids = torch.topk(probs, k=topk).indices[0].tolist()
+    return [idx2word[i] for i in topk_ids]
+```
+
+```python
+test_input = ['من', 'کتاب', 'را']
+print("Predicted next words:", predict_next_token(model, test_input))
+```
+
+ما در این مرحله یک مدل زبانی واقعی با ترنسفورمر طراحی کردیم که می‌تونه توکن بعدی را پیش‌بینی کنه و ساختارش شبیه به مدل‌های بزرگ‌تره. حالا پایه‌ی لازم برای ساخت یک **LLM واقعی** رو داریم.
+
+---
+
+## ۱۸. تولید متن (Text Generation) به صورت Auto-Regressive
+
+ایجاد مدلی که بتونه بعد از دیدن یک دنباله‌ی اولیه از کلمات، توکن‌های بعدی رو یکی‌یکی **پیش‌بینی و تولید** کنه؛ درست مثل LLMهای واقعی مثل GPT.
+
+
+
+##### مفهوم Auto-Regressive
+
+مدل‌های auto-regressive مثل GPT، خروجی خودشون رو به عنوان ورودی مرحله‌ی بعدی استفاده می‌کنن.  
+فرایند تولید به این شکله
+
+```text
+Input: ["من", "کتاب", "را"]
+→ مدل پیش‌بینی می‌کنه: "خواندم"
+→ Input جدید می‌شه: ["من", "کتاب", "را", "خواندم"]
+→ مدل پیش‌بینی می‌کنه: "."
+→ و همین‌طور ادامه می‌ده...
+```
+
+##### تابع تولید متن مرحله‌به‌مرحله
+
+ما قبلاً مدلی ساختیم که می‌تونه خروجی برای یک توکن بعدی بده. حالا می‌خوایم یک تابع بسازیم که بتونه به‌صورت مرحله‌ای متن کامل تولید کنه.
+
+```python
+def generate_text(model, prompt_tokens, max_new_tokens=10, temperature=1.0, top_k=5):
+    model.eval()
+    tokens = [word2idx.get(t, word2idx["<unk>"]) for t in prompt_tokens]
+
+    for _ in range(max_new_tokens):
+        input_ids = torch.tensor([tokens], dtype=torch.long)  # (1, len)
+        with torch.no_grad():
+            logits = model(input_ids)  # (1, seq_len, vocab_size)
+            logits = logits[0, -1, :] / temperature  # فقط آخرین توکن → (vocab_size,)
+            probs = F.softmax(logits, dim=-1)
+
+            # top-k sampling
+            topk_probs, topk_indices = torch.topk(probs, k=top_k)
+            chosen = torch.multinomial(topk_probs, num_samples=1).item()
+            next_token = topk_indices[chosen].item()
+
+        tokens.append(next_token)
+
+        # اگه توکن پایان باشه، تولید رو متوقف کن
+        if idx2word[next_token] in ['<eos>', '.', '؟']:
+            break
+
+    return [idx2word[tok] for tok in tokens]
+
+```
+
+##### تست تابع تولید متن
+
+```python
+prompt = ['من', 'کتاب', 'را']
+generated = generate_text(model, prompt, max_new_tokens=10)
+print(" ".join(generated))
+```
+
+##### تنظیمات مختلف:
+
+| پارامتر          | توضیح                                                         |
+| ---------------- | ------------------------------------------------------------- |
+| `max_new_tokens` | تعداد توکن‌هایی که مدل باید پیش‌بینی کنه                      |
+| `temperature`    | دمای نمونه‌گیری؛ هرچه بالاتر، خروجی خلاقانه‌تر ولی بی‌ثبات‌تر |
+| `top_k`          | فقط از بین k تا توکن پر احتمال نمونه‌گیری انجام می‌شه         |
+
+##### خروجی نمونه:
+
+```
+Prompt: من کتاب را  
+Output: من کتاب را خواندم و آن را بسیار دوست داشتم .
+```
+
+---
+
+## **۱۹. پیش‌بینی توکن بعدی (Next Token Prediction)**
+
+یکی از اصلی‌ترین اهداف در آموزش مدل‌های زبانی بزرگ اینه که مدل بتونه فقط با دیدن توکن‌های قبلی، توکن بعدی رو پیش‌بینی کنه. برای مثال اگه جمله‌ای مثل «من کتاب را» رو به مدل بدی، انتظار داری مدل بگه «خواندم».
+
+
+
+**فرمول ریاضی این کار چیه؟**
+
+فرض کن یه دنباله‌ی متنی داری مثل:
+x = [x₁, x₂, x₃, ..., xₙ]
+
+هدف اینه که مدل بتونه احتمالات زیر رو یاد بگیره:
+
+P(x₁) * P(x₂ | x₁) * P(x₃ | x₁,x₂) * ... * P(xₙ | x₁,...,xₙ₋₁)
+
+یعنی مدل در هر مرحله فقط باید با توجه به توکن‌های قبلی، توکن بعدی رو درست حدس بزنه.
+
+
+
+**ورودی و هدف در آموزش**
+
+برای آموزش مدل، ورودی‌ها و هدف‌ها باید یک توکن از هم جا‌به‌جا باشن. مثلاً:
+
+ورودی: من کتاب را  
+هدف: کتاب را خواندم
+
+مدل یاد می‌گیره برای هر جای جمله، چی باید بیاد بعدش.
+
+
+
+##### **تابع آماده‌سازی batch از توکن‌ها**
+
+```python
+def create_training_batch(tokens, block_size=5):
+    X, Y = [], []
+    for i in range(len(tokens) - block_size):
+        x_chunk = tokens[i : i + block_size]
+        y_chunk = tokens[i + 1 : i + block_size + 1]
+        X.append(x_chunk)
+        Y.append(y_chunk)
+    return torch.tensor(X), torch.tensor(Y)
+```
+
+این تابع یه دنباله رو به ورودی (X) و خروجی هدف (Y) تبدیل می‌کنه.
+
+
+
+##### تابع آموزش برای یک epoch
+
+```python
+def train_epoch(model, optimizer, loss_fn, data, batch_size=8):
+    model.train()
+    total_loss = 0
+
+    for i in range(0, len(data) - batch_size, batch_size):
+        batch_tokens = data[i : i + batch_size + 1]
+        X, Y = create_training_batch(batch_tokens)
+
+        optimizer.zero_grad()
+        logits = model(X)  # خروجی مدل: (B, T, vocab_size)
+        loss = loss_fn(logits.view(-1, logits.size(-1)), Y.view(-1))
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    return total_loss / len(data)
+```
+
+توی این حلقه، هر بار چند توکن به مدل می‌دیم، خروجی می‌گیریم، loss رو حساب می‌کنیم، و مدل رو یک قدم آموزش می‌دیم.
+
+
+
+**خروجی نهایی مدل**
+
+اگه ورودی بدیم :  
+`من کتاب را`  
+مدل باید بگه مثلاً:  
+`خواندم` (با احتمال ۶۸٪)
+
+مدل در آخر خروجی‌هایی به شکل `logits` تولید می‌کنه (اعداد خام)، بعد با softmax تبدیلشون می‌کنیم به احتمال.
+
+
+
+##### مشاهده احتمال‌ها بعد از softmax
+
+```python
+with torch.no_grad():
+    out = model(X)
+    probs = F.softmax(out, dim=-1)
+    top_probs, top_ids = torch.topk(probs, k=3, dim=-1)
+    print("Top predictions per token:", top_ids)
+```
+
+به این ترتیب می‌تونیم ببینیم مدل داره برای هر موقعیت تو جمله، چی پیشنهاد میده.
+
+---
+
+## مرحله ۲۰: استفاده عملی از مدل آموزش‌دیده + بهبود و ارزیابی
+
+##### ۲۰.۱. تولید متن (Text Generation / Inference)
+
+بعد از اینکه مدلمون آموزش دید (چه بزرگ، چه ساده)، حالا وقتشه باهاش متن تولید کنیم. معمولاً ورودی (prompt) می‌دیم و مدل ادامه‌ش رو پیش‌بینی می‌کنه.
+
+##### مثال کد: تولید متن با Sampling و Top-k و Temperature
+
+```python
+import torch
+import torch.nn.functional as F
+
+def generate_text(model, tokenizer, prompt, max_new_tokens=50, temperature=1.0, top_k=40):
+    model.eval()
+    input_ids = tokenizer.encode(prompt, return_tensors="pt")
+
+    for _ in range(max_new_tokens):
+        logits = model(input_ids).logits[:, -1, :] / temperature
+        top_k_logits, top_k_indices = torch.topk(logits, top_k)
+        probs = F.softmax(top_k_logits, dim=-1)
+        next_token = top_k_indices[torch.multinomial(probs, num_samples=1)]
+        input_ids = torch.cat([input_ids, next_token], dim=1)
+
+    return tokenizer.decode(input_ids[0], skip_special_tokens=True)
+```
+
+##### ۲۰.۲. Fine-Tuning روی داده‌های جدید
+
+فرض کن یه مدل داریم که زبان فارسی بلده، حالا می‌خوایم فقط روی دیالوگ‌های فروشگاهی fine-tune کنیم:
+
+```python
+# مراحل کلی:
+# - آماده‌سازی دیتا
+# - تعریف optimizer جدید با نرخ یادگیری کمتر
+# - فریز کردن برخی لایه‌ها (اختیاری)
+# - آموزش مدل دوباره با batch کوچک
+
+# مثلا:
+for param in model.transformer.h[:6].parameters():  # لایه‌های اولیه رو فریز کن
+    param.requires_grad = False
+```
+
+##### ۲۰.۳. ارزیابی عملکرد مدل
+
+چند روش برای بررسی کیفیت:
+
+###### A. Perplexity:
+
+```python
+from torch.nn import CrossEntropyLoss
+
+def calculate_perplexity(model, input_ids, labels):
+    with torch.no_grad():
+        outputs = model(input_ids, labels=labels)
+        loss = outputs.loss
+        return torch.exp(loss)  # perplexity = e^loss
+```
+
+###### B. BLEU / ROUGE
+
+```bash
+pip install evaluate
+```
+
+```python
+from evaluate import load
+
+bleu = load("bleu")
+results = bleu.compute(predictions=["سلام چطوری؟"], references=[["سلام، حالت چطوره؟"]])
+print("BLEU:", results["bleu"])
+```
+
+---
+
+## مرحله ۲۱: مقایسه، کاربرد واقعی، جمع‌بندی و مسیر آینده
+
+##### ۲۱.۱. مقایسه با مدل‌های معروف
+
+| ویژگی         | مدل شما | GPT-2     | Bloom    |
+| ------------- | ------- | --------- | -------- |
+| تعداد پارامتر | ~10M    | 124M–1.5B | تا 176B  |
+| زبان          | فارسی   | انگلیسی   | چندزبانه |
+| سرعت آموزش    | سریع    | کندتر     | خیلی کند |
+| نیاز به GPU   | کم      | متوسط     | بالا     |
+
+##### ۲۱.۲. استفاده واقعی از مدل (API ساده)
+
+```bash
+pip install fastapi uvicorn
+```
+
+```python
+# main.py
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Prompt(BaseModel):
+    text: str
+
+@app.post("/generate")
+def generate(prompt: Prompt):
+    output = generate_text(model, tokenizer, prompt.text)
+    return {"response": output}
+```
+
+```bash
+uvicorn main:app --reload
+```
+
+##### ۲۱.۳. جمع‌بندی و مسیر آینده
+
+###### چالش‌ها:
+
+- **داده بد یا جانبدارانه**
+
+- **پیش پردازش روی دیتا**
+
+- **مشکلات اخلاقی**
+
+- **هزینه GPU بالا**
+
+###### مسیر ادامه:
+
+- استفاده از دیتاست‌های بیشتر و تمیزتر
+
+- یادگیری Transfer Learning و Adapter Layers (مثل LoRA)
+
+- یادگیری Distributed Training با PyTorch Lightning و DeepSpeed
+
+- ساخت LLM سفارشی با کمترین منابع ممکن
